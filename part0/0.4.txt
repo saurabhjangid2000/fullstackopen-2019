@@ -10,7 +10,7 @@ server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
 
 note over browser:
 User writes something in TextField on
-Browser and then clicked on  " submit " Button
+browser and then clicked on  " submit " button
 end note
 
 browser->server:POST https://fullstack-exampleapp.herokuapp.com/new_note { "note": "<note typed in TextField>" }
