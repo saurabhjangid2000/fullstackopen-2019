@@ -1,4 +1,4 @@
-#Excercise 0.5: Single page app
+#Exercise 0.5: Single page app
 
 browser->server:https://fullstack-exampleapp.herokuapp.com/spa
 server-->browser:HTML Code
