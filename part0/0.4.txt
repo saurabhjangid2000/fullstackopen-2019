@@ -1,0 +1,37 @@
+
+browser->server: https://fullstack-exampleapp.herokuapp.com/notes
+server-->browser:HTML Code
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+server-->browser: main.js
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+User writes something in TextField on
+Browser and then clicked on  " submit " Button
+end note
+
+browser->server:POST https://fullstack-exampleapp.herokuapp.com/new_note { "note": "<note typed in TextField>" }
+
+note over server:
+Server reads the note and saved it
+end note
+
+server-->browser:Redirects browser to https://fullstack-exampleapp.herokuapp.com/notes
+
+note over browser:
+browser renders HTML Code
+end note 
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+server-->browser: main.js
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+
+note over browser:
+Note added successfully
+end note 
