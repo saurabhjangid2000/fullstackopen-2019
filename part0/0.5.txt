@@ -1,3 +1,5 @@
+#Excercise 0.5: Single page app
+
 browser->server:https://fullstack-exampleapp.herokuapp.com/spa
 server-->browser:HTML Code
 browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
