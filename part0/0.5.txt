@@ -10,3 +10,4 @@ server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
 note over browser:
 browser renders the code
 end note 
+
