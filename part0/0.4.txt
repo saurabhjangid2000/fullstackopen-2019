@@ -1,3 +1,4 @@
+#Exercise 0.4:new note
 
 browser->server: https://fullstack-exampleapp.herokuapp.com/notes
 server-->browser:HTML Code
