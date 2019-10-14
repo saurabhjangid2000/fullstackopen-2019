@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import CountryDetail from './components/Details_Countries'
-import ListofCountaries from './components/ListofCountaries'
+import ListofCountaries from './components/ListofCountries'
 
 const App = () => {
   const [filter, setFilter] = useState('')
@@ -29,7 +29,7 @@ const App = () => {
         <CountryDetail {...CountriesSelect} />
       ) 
       : (
-        <ListofCountaries
+        <ListofCountries
           countries={countries}
           onCountriesSelect={country => setCountriesSelect(country)}
         />
