@@ -4,11 +4,6 @@ const morgan = require('morgan')
 const cors = require('cors')
 app.use(cors())
 
-const bodyParser = require('body-parser')
-
-app.use(bodyParser.json())
-
-
 morgan.token('body', function(req) {
   return JSON.stringify(req.body)
 })
@@ -17,6 +12,9 @@ app.use(
       ':method :url :status - :response-time ms - :res[content-length] - :body (:date[web])'
     )
   )
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 
 let persons =[
@@ -73,6 +71,18 @@ app.delete('/api/persons/:id',(request,response) => {
   response.status(204).end()  
 })
 
+const handleerror = (error, request, response, next) => {
+  console.log(error.message)
+
+  if (error.name === 'Casterr' && error.kind === 'ObjectID') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'Validationerr') {
+    return response.status(400).json({ error: error.message })
+  }
+}
+
+app.use(handleerror);
+
 app.post('/api/persons', (request,response) => {
   const body = request.body
 
@@ -99,7 +109,7 @@ app.post('/api/persons', (request,response) => {
   response.json(person)
 })
   
-const PORT = process.env.PORT || 3001
+const PORT = 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
