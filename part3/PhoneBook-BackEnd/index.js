@@ -4,6 +4,11 @@ const morgan = require('morgan')
 const cors = require('cors')
 app.use(cors())
 
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
+
+
 morgan.token('body', function(req) {
   return JSON.stringify(req.body)
 })
@@ -12,9 +17,6 @@ app.use(
       ':method :url :status - :response-time ms - :res[content-length] - :body (:date[web])'
     )
   )
-const bodyParser = require('body-parser')
-
-app.use(bodyParser.json())
 
 
 let persons =[
@@ -70,45 +72,34 @@ app.delete('/api/persons/:id',(request,response) => {
   persons=persons.filter(person => person.id !== id)
   response.status(204).end()  
 })
+
+app.post('/api/persons', (request,response) => {
+  const body = request.body
+
+  if (!body.name || !body.number) {
+      return response.status(400).json({ 
+      error: 'content missing' 
+      })
+  }
+  var i
+  for(i=0;i<phonebook.length;i++){
+      if(body.name === phonebook[i].name){
+          return response.status(400).json({
+              error: 'name must be unique'
+          })
+      }
+  }
+  
+  const person = {
+      id: Math.floor(Math.random()*1000000),
+      name: body.name,
+      number: body.number
+  }
+  persons = persons.concat(person)
+  response.json(person)
+})
   
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
-
-
-
-
-
-
-const validateBodyPerson = body => {
-    if (!body.name) {
-      return 'name missing'
-    }
-  
-    if (!body.phone) {
-      return 'phone missing'
-    }
-  }
-  
-
-app.post('/api/persons', (request, response, next) => {
-    const body = request.body
-  
-    const error = validateBodyPerson(body)
-    if (error) {
-      return response.status(400).json({
-        error: error
-      })
-    }
-    const person = new Person({
-      name: body.name,
-      phone: body.phone
-    })
-  
-    person
-      .save()
-      .then(savedPerson => savedPerson.toJSON())
-      .then(saveAndFormattedPerson => response.json(saveAndFormattedPerson))
-      .catch(error => next(error))
-  })
