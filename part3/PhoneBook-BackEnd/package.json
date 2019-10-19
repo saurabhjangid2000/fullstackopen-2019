@@ -1,21 +1,27 @@
 {
-  "name": "backend",
-  "version": "0.0.1",
-  "description": "",
+  "name": "phonebook-mangoose",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node mongo.js",
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "test": "echo \"Error : no test specified\" && exit 1"
   },
   "author": "Matti Luukkainen",
   "license": "MIT",
   "dependencies": {
+    "bson-ext": "^2.0.3",
+    "core-util-is": "^1.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "morgan": "^1.9.1"
-  },
-  "devDependencies": {
+    "kerberos": "file:kerberos",
+    "lint": "^0.7.0",
+    "mongodb": "^3.3.3",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.19.4"
-  }
+  },
+  "devDependencies": {},
+  "keywords": []
 }
