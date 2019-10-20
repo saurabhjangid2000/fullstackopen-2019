@@ -92,8 +92,8 @@ app.post('/api/persons', (request,response) => {
       })
   }
   var i
-  for(i=0;i<phonebook.length;i++){
-      if(body.name === phonebook[i].name){
+  for(i=0;i<persons.length;i++){
+      if(body.name === persons.name){
           return response.status(400).json({
               error: 'name must be unique'
           })
