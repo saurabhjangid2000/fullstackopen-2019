@@ -16,6 +16,15 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.json())
 
+const validatePerson = body => {
+  if (!body.name) {
+    return 'name missing'
+  }
+
+  if (!body.number) {
+    return 'number missing'
+  }
+}
 
 let persons =[
           {
@@ -71,7 +80,7 @@ app.delete('/api/persons/:id',(request,response) => {
   response.status(204).end()  
 })
 
-const handleerror = (error, request, response, next) => {
+const handleError = (error, request, response, next) => {
   console.log(error.message)
 
   if (error.name === 'Casterr' && error.kind === 'ObjectID') {
@@ -79,9 +88,32 @@ const handleerror = (error, request, response, next) => {
   } else if (error.name === 'Validationerr') {
     return response.status(400).json({ error: error.message })
   }
+    next(error)
+
 }
 
-app.use(handleerror);
+app.use(handleError);
+
+ const error = validatePerson(body)
+  if (error) {
+    return response.status(400).json({
+      error: error
+    })
+  }
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
+    person
+    .save()
+    .then(personSaved => personSaved.toJSON())
+    .then(personSavedAndFormatted => response.json(personSavedAndFormatted))
+    .catch(error => next(error))
+})
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
 
 app.post('/api/persons', (request,response) => {
   const body = request.body
@@ -99,7 +131,8 @@ app.post('/api/persons', (request,response) => {
           })
       }
   }
-  
+
+    
   const person = {
       id: Math.floor(Math.random()*1000000),
       name: body.name,
